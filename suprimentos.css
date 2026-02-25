@@ -1,0 +1,120 @@
+/* ============================================================
+   ESTILOS ESPECÍFICOS - PÁGINA SUPRIMENTOS
+   ============================================================ */
+
+.shop-container {
+    padding: 120px 8% 80px;
+    background-color: var(--dark);
+    min-height: 100vh;
+}
+
+.shop-header {
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.shop-header span {
+    color: var(--primary);
+}
+
+/* GRID DE PRODUTOS */
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 25px;
+}
+
+.product-card {
+    background: var(--dark-surface);
+    border-radius: 15px;
+    padding: 30px;
+    text-align: center;
+    border: 1px solid rgba(255,255,255,0.05);
+    transition: 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+.product-card:hover {
+    transform: scale(1.03);
+    border-color: var(--secondary);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+}
+
+/* BADGE */
+.product-badge {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: var(--primary);
+    color: white;
+    font-size: 0.7rem;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-weight: 700;
+}
+
+/* ÍCONES DIFERENCIADOS */
+.product-icon {
+    font-size: 3rem;
+    color: var(--text-gray);
+    margin-bottom: 20px;
+}
+
+.color-icon { color: var(--secondary); }
+.cylinder { color: #f1c40f; }
+
+/* TEXTOS */
+.product-card h3 {
+    color: var(--white);
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+}
+
+.compatibilidade {
+    font-size: 0.85rem;
+    color: var(--text-gray);
+    margin-bottom: 20px;
+    flex-grow: 1;
+}
+
+/* PREÇO */
+.price-tag {
+    font-size: 1.8rem;
+    color: var(--secondary);
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+
+/* BOTÃO DE COMPRA */
+.btn-buy {
+    background: var(--whatsapp);
+    color: white;
+    padding: 12px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    transition: 0.3s;
+}
+
+.btn-buy:hover {
+    filter: brightness(1.1);
+}
+
+/* ============================================================
+   RESPONSIVO (CELULAR)
+   ============================================================ */
+@media (max-width: 768px) {
+    .shop-container { padding: 100px 5% 40px; }
+    
+    .product-grid {
+        grid-template-columns: 1fr; /* Um produto por linha no celular */
+    }
+
+    .price-tag { font-size: 1.5rem; }
+}
