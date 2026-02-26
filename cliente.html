@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Área do Cliente | PrintPro</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css"> <link rel="stylesheet" href="cliente.css"> </head>
+<body>
+
+    <header>
+        <div class="logo">Print<span>Pro</span></div>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="index.html#servicos">Serviços</a></li>
+                <li><a href="contratos.html">Locação</a></li>
+                <li><a href="index.html#contato">Contato</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="client-hero">
+        <div class="container">
+            <div class="form-container">
+                <div class="form-header">
+                    <i class="fas fa-headset"></i>
+                    <h2>Abertura de Chamado</h2>
+                    <p>Informe os dados da sua máquina para suporte imediato.</p>
+                </div>
+
+                <form id="support-form">
+                    <div class="input-group">
+                        <label for="tag">Etiqueta da Impressora (Ex: P001)</label>
+                        <div class="input-wrapper">
+                            <i class="fas fa-tag"></i>
+                            <input type="text" id="tag" placeholder="Digite o código da etiqueta..." required>
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="problem">Descrição do Problema</label>
+                        <div class="input-wrapper">
+                            <i class="fas fa-comment-dots"></i>
+                            <textarea id="problem" rows="5" placeholder="Descreva o que está acontecendo com o equipamento..." required></textarea>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn-submit">
+                        <i class="fas fa-paper-plane"></i> Enviar Solicitação
+                    </button>
+                </form>
+
+                <div id="success-msg" class="hidden">
+                    <i class="fas fa-check-circle"></i>
+                    <p>Solicitação enviada com sucesso! Nossa equipe entrará em contato em breve.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>© 2026 PrintPro. Todos os direitos reservados.</p>
+    </footer>
+
+    <script>
+        // Script simples para simular o envio
+        document.getElementById('support-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            this.style.display = 'none';
+            document.getElementById('success-msg').classList.remove('hidden');
+        });
+    </script>
+</body>
+</html>
