@@ -137,7 +137,7 @@ td {
 }
 
 /* ============================================================
-   RESPONSIVIDADE AJUSTADA PARA CELULAR
+   RESPONSIVIDADE AJUSTADA PARA CELULAR (TUDO À ESQUERDA)
    ============================================================ */
 @media (max-width: 768px) {
     .dashboard-container { 
@@ -163,13 +163,12 @@ td {
     }
 
     .main-content {
-        padding: 20px;
+        padding: 15px;
     }
 
     .main-header {
-        flex-direction: column;
-        text-align: center;
-        gap: 10px;
+        text-align: left;
+        margin-bottom: 20px;
     }
 
     /* Transformação da Tabela para Mobile */
@@ -179,7 +178,7 @@ td {
     }
 
     thead {
-        display: none; /* Esconde os títulos das colunas no topo */
+        display: none;
     }
 
     table, tbody, tr, td {
@@ -189,33 +188,39 @@ td {
 
     tr {
         background: var(--dark-surface);
-        margin-bottom: 15px;
+        margin-bottom: 20px;
         border-radius: 12px;
-        border: 1px solid rgba(255,255,255,0.05);
-        padding: 10px;
+        border: 1px solid rgba(255,255,255,0.08);
+        padding: 15px;
     }
 
     td {
-        text-align: right;
-        padding: 12px 10px;
-        position: relative;
+        /* ALINHAMENTO À ESQUERDA SOLICITADO */
+        text-align: left; 
+        padding: 10px 0;
         border-bottom: 1px solid rgba(255,255,255,0.03);
+        display: flex;
+        flex-direction: column; /* Empilha o título em cima do valor */
+        gap: 5px;
     }
 
     td:last-child {
         border-bottom: none;
     }
 
-    /* Adiciona etiquetas para cada dado no mobile */
+    /* Títulos das categorias (Nome, Etiqueta, etc) */
     td::before {
         content: attr(data-label);
-        position: absolute;
-        left: 10px;
-        width: 45%;
-        text-align: left;
         font-weight: 600;
         color: var(--primary);
-        font-size: 0.8rem;
+        font-size: 0.7rem;
         text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    /* Garante que badges e tags não herdem comportamentos estranhos no mobile */
+    .status-badge {
+        align-self: flex-start; /* Mantém o "Pendente" à esquerda */
+        margin-top: 5px;
     }
 }
