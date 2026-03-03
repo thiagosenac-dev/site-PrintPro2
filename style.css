@@ -155,7 +155,6 @@ nav ul li a:hover { color: var(--primary); }
     margin-left: 15%;
     flex-direction: column;
     max-width: 70%;
-    
 }
 
 .service-card {
@@ -210,6 +209,33 @@ footer {
 .social-links { margin: 20px 0; }
 .social-links a { color: white; font-size: 1.5rem; margin: 0 10px; }
 
+/* ÍCONE DE CHAVE DISCRETO */
+.social-links a.admin-key {
+    color: var(--dark-surface); /* Começa quase invisível */
+    font-size: 1.2rem;
+    transition: 0.3s;
+}
+
+.social-links a.admin-key:hover {
+    color: var(--text-gray); /* Aparece ao passar o mouse */
+}
+
+/* ESTILOS PARA TELAS ADMIN (CASO USE NO MESMO CSS) */
+.admin-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 30px;
+    background: var(--dark-surface);
+}
+
+.admin-table th, .admin-table td {
+    padding: 15px;
+    text-align: left;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+
+.admin-table th { background: var(--primary); color: white; }
+
 /* ============================================================
    RESPONSIVO (Ajustes Exclusivos para Celular)
    ============================================================ */
@@ -241,9 +267,8 @@ footer {
 
     .services-grid { grid-template-columns: 1fr; }
 
-    /* Mudança solicitada: Texto em cima e Mapa embaixo no celular */
     .location-container {
-        flex-direction: column; /* Isso faz com que o texto (que vem primeiro no HTML) fique em cima */
+        flex-direction: column;
         gap: 30px;
         text-align: center;
     }

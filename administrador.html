@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel de Chamados | PrintPro Admin</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="administrador.css">
+</head>
+<body>
+
+    <div class="dashboard-container">
+        <aside class="sidebar">
+            <div class="logo">Print<span>Pro</span></div>
+            <nav class="sidebar-nav">
+                <a href="#" class="active"><i class="fas fa-list"></i> Chamados</a>
+                <a href="#"><i class="fas fa-check-double"></i> Concluídos</a>
+                <a href="index.html" class="logout"><i class="fas fa-sign-out-alt"></i> Sair</a>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <header class="main-header">
+                <h1>Gerenciamento de Chamados</h1>
+                <div class="admin-info">
+                    <span>Bem-vindo, <strong>Administrador</strong></span>
+                </div>
+            </header>
+
+            <section class="table-section">
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Nome da Pessoa</th>
+                                <th>Etiqueta da Máquina</th>
+                                <th>Descrição do Problema</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Claudio Ramos</td>
+                                <td class="tag-id">PRN-9902</td>
+                                <td>Vazamento de toner azul no lado direito das impressões coloridas.</td>
+                                <td><span class="status-badge">Pendente</span></td>
+                            </tr>
+                            <tr>
+                                <td>Beatriz Souza</td>
+                                <td class="tag-id">TERM-441</td>
+                                <td>A impressora de etiquetas liga, mas não traciona o papel.</td>
+                                <td><span class="status-badge">Pendente</span></td>
+                            </tr>
+                            <tr>
+                                <td>Departamento de TI</td>
+                                <td class="tag-id">HP-8820</td>
+                                <td>Atolamento constante no alimentador automático (ADF).</td>
+                                <td><span class="status-badge">Pendente</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </main>
+    </div>
+
+</body>
+</html>

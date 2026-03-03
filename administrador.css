@@ -1,0 +1,221 @@
+/* Importando as variáveis do seu projeto original para manter a identidade */
+:root {
+    --primary: #6c5ce7;
+    --secondary: #00d2ff;
+    --dark: #1e223a;
+    --dark-surface: #1a1d30;
+    --light-text: #e6edf3;
+    --text-gray: #8b949e;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    background-color: var(--dark);
+    color: var(--light-text);
+}
+
+.dashboard-container {
+    display: flex;
+    min-height: 100vh;
+}
+
+/* SIDEBAR - Menu Lateral */
+.sidebar {
+    width: 250px;
+    background-color: var(--dark-surface);
+    border-right: 1px solid rgba(255,255,255,0.05);
+    display: flex;
+    flex-direction: column;
+    padding: 30px 20px;
+}
+
+.sidebar .logo {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: white;
+    text-transform: uppercase;
+    margin-bottom: 50px;
+    text-align: center;
+}
+
+.sidebar .logo span { color: var(--primary); }
+
+.sidebar-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.sidebar-nav a {
+    text-decoration: none;
+    color: var(--text-gray);
+    padding: 12px 15px;
+    border-radius: 8px;
+    transition: 0.3s;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.sidebar-nav a:hover, .sidebar-nav a.active {
+    background: var(--primary);
+    color: white;
+}
+
+.sidebar-nav a.logout {
+    margin-top: auto;
+    color: #ff7675;
+}
+
+/* CONTEÚDO PRINCIPAL */
+.main-content {
+    flex: 1;
+    padding: 40px;
+}
+
+.main-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 40px;
+}
+
+.main-header h1 {
+    font-size: 1.8rem;
+}
+
+/* TABELA */
+.table-container {
+    background: var(--dark-surface);
+    border-radius: 15px;
+    overflow: hidden;
+    border: 1px solid rgba(255,255,255,0.05);
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+thead {
+    background: rgba(108, 92, 231, 0.1);
+}
+
+th {
+    text-align: left;
+    padding: 20px;
+    color: var(--primary);
+    font-weight: 600;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+}
+
+td {
+    padding: 20px;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    font-size: 0.95rem;
+    color: var(--light-text);
+}
+
+.tag-id {
+    font-weight: 700;
+    color: var(--secondary);
+}
+
+.status-badge {
+    background: rgba(255, 159, 67, 0.2);
+    color: #ff9f43;
+    padding: 5px 12px;
+    border-radius: 50px;
+    font-size: 0.8rem;
+}
+
+/* ============================================================
+   RESPONSIVIDADE AJUSTADA PARA CELULAR
+   ============================================================ */
+@media (max-width: 768px) {
+    .dashboard-container { 
+        flex-direction: column; 
+    }
+
+    .sidebar { 
+        width: 100%; 
+        height: auto; 
+        padding: 20px;
+        border-right: none;
+        border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+
+    .sidebar .logo {
+        margin-bottom: 20px;
+    }
+
+    .sidebar-nav {
+        flex-direction: row;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+
+    .main-content {
+        padding: 20px;
+    }
+
+    .main-header {
+        flex-direction: column;
+        text-align: center;
+        gap: 10px;
+    }
+
+    /* Transformação da Tabela para Mobile */
+    .table-container {
+        border: none;
+        background: transparent;
+    }
+
+    thead {
+        display: none; /* Esconde os títulos das colunas no topo */
+    }
+
+    table, tbody, tr, td {
+        display: block;
+        width: 100%;
+    }
+
+    tr {
+        background: var(--dark-surface);
+        margin-bottom: 15px;
+        border-radius: 12px;
+        border: 1px solid rgba(255,255,255,0.05);
+        padding: 10px;
+    }
+
+    td {
+        text-align: right;
+        padding: 12px 10px;
+        position: relative;
+        border-bottom: 1px solid rgba(255,255,255,0.03);
+    }
+
+    td:last-child {
+        border-bottom: none;
+    }
+
+    /* Adiciona etiquetas para cada dado no mobile */
+    td::before {
+        content: attr(data-label);
+        position: absolute;
+        left: 10px;
+        width: 45%;
+        text-align: left;
+        font-weight: 600;
+        color: var(--primary);
+        font-size: 0.8rem;
+        text-transform: uppercase;
+    }
+}

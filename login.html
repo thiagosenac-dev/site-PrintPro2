@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Administrativo | PrintPro</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .login-body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: var(--dark);
+        }
+        .login-card {
+            background: var(--dark-surface);
+            padding: 40px;
+            border-radius: 20px;
+            border: 1px solid rgba(108, 92, 231, 0.2);
+            width: 100%;
+            max-width: 380px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+        .login-card h2 { margin-bottom: 10px; color: var(--white); }
+        .login-card p { color: var(--text-gray); font-size: 0.9rem; margin-bottom: 25px; }
+        
+        .input-group { margin-bottom: 15px; text-align: left; }
+        .input-group input {
+            width: 100%;
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid #3e4463;
+            background: #252a41;
+            color: white;
+            outline: none;
+        }
+        .btn-login {
+            width: 100%;
+            border: none;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body class="login-body">
+
+    <div class="login-card">
+        <div class="logo" style="margin-bottom: 20px;">Print<span>Pro</span></div>
+        <h2>Painel Interno</h2>
+        <p>Insira suas credenciais para gerenciar os chamados.</p>
+        
+        <div class="input-group">
+            <input type="text" placeholder="Usuário">
+        </div>
+        <div class="input-group">
+            <input type="password" placeholder="Senha">
+        </div>
+        
+        <a href="administrador.html" class="btn-service btn-login">Entrar no Sistema</a>
+        
+        <div style="margin-top: 20px;">
+            <a href="index.html" style="color: var(--text-gray); text-decoration: none; font-size: 0.8rem;">Voltar para o site</a>
+        </div>
+    </div>
+
+</body>
+</html>
