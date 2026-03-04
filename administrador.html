@@ -14,49 +14,81 @@
         <aside class="sidebar">
             <div class="logo">Print<span>Pro</span></div>
             <nav class="sidebar-nav">
-                <a href="#" class="active"><i class="fas fa-list"></i> Chamados</a>
-                <a href="#"><i class="fas fa-check-double"></i> Concluídos</a>
+                <a href="#" class="active" onclick="showSection('chamados')"><i class="fas fa-list"></i> Chamados</a>
+                <a href="#" onclick="showSection('concluidos')"><i class="fas fa-check-double"></i> Concluídos</a>
                 <a href="index.html" class="logout"><i class="fas fa-sign-out-alt"></i> Sair</a>
             </nav>
         </aside>
 
         <main class="main-content">
-            <header class="main-header">
-                <h1>Gerenciamento de Chamados</h1>
-                <div class="admin-info">
-                    <span>Bem-vindo, <strong>Administrador</strong></span>
-                </div>
-            </header>
+            
+            <section id="section-chamados">
+                <header class="main-header">
+                    <h1>Gerenciamento de Chamados</h1>
+                    <div class="admin-info">
+                        <span>Bem-vindo, <strong>Administrador</strong></span>
+                    </div>
+                </header>
 
-            <section class="table-section">
                 <div class="table-container">
                     <table>
                         <thead>
                             <tr>
-                                <th>Nome da Pessoa</th>
-                                <th>Etiqueta da Máquina</th>
+                                <th>Nome</th>
+                                <th>Máquina</th>
                                 <th>Descrição do Problema</th>
+                                <th>Status</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td data-label="Nome">Claudio Ramos</td>
+                                <td data-label="Máquina" class="tag-id">PRN-9902</td>
+                                <td data-label="Descrição">Vazamento de toner azul no lado direito das impressões coloridas.</td>
+                                <td data-label="Status"><span class="status-badge">Pendente</span></td>
+                                <td data-label="Ações">
+                                    <button class="btn-edit" onclick="openModal()"><i class="fas fa-edit"></i> Editar</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section id="section-concluidos" style="display: none;">
+                <header class="main-header">
+                    <h1>Chamados Concluídos</h1>
+                </header>
+
+                <div class="filter-bar">
+                    <input type="text" placeholder="Filtrar por etiqueta ou técnico...">
+                    <select>
+                        <option value="">Todas as datas</option>
+                        <option value="hoje">Hoje</option>
+                        <option value="semana">Esta semana</option>
+                    </select>
+                    <button class="btn-filter">Filtrar</button>
+                </div>
+
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Data Fim</th>
+                                <th>Máquina</th>
+                                <th>Resolução Final</th>
+                                <th>Técnico</th>
                                 <th>Status</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
-                                <td>Claudio Ramos</td>
-                                <td class="tag-id">PRN-9902</td>
-                                <td>Vazamento de toner azul no lado direito das impressões coloridas.</td>
-                                <td><span class="status-badge">Pendente</span></td>
-                            </tr>
-                            <tr>
-                                <td>Beatriz Souza</td>
-                                <td class="tag-id">TERM-441</td>
-                                <td>A impressora de etiquetas liga, mas não traciona o papel.</td>
-                                <td><span class="status-badge">Pendente</span></td>
-                            </tr>
-                            <tr>
-                                <td>Departamento de TI</td>
-                                <td class="tag-id">HP-8820</td>
-                                <td>Atolamento constante no alimentador automático (ADF).</td>
-                                <td><span class="status-badge">Pendente</span></td>
+                                <td data-label="Data Fim">04/03/2026</td>
+                                <td data-label="Máquina" class="tag-id">HP-1020</td>
+                                <td data-label="Resolução">Troca de rolete efetuada e limpeza interna concluída.</td>
+                                <td data-label="Técnico">Admin</td>
+                                <td data-label="Status"><span class="status-badge status-concluido">Finalizado</span></td>
                             </tr>
                         </tbody>
                     </table>
@@ -65,5 +97,48 @@
         </main>
     </div>
 
+    <div class="modal-overlay" id="modalEditar">
+        <div class="modal-card">
+            <h2>Atualizar Chamado</h2>
+            <form>
+                <div class="form-group">
+                    <label>Alterar Status</label>
+                    <select>
+                        <option value="pendente">Pendente</option>
+                        <option value="atendimento">Em Atendimento</option>
+                        <option value="aguardando">Aguardando Peça</option>
+                        <option value="concluido">Concluir</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Descrição / Relatório do Problema</label>
+                    <textarea placeholder="Descreva aqui os detalhes técnicos ou o que está sendo feito..."></textarea>
+                </div>
+                <div class="modal-buttons">
+                    <button type="button" class="btn-cancel" onclick="closeModal()">Cancelar</button>
+                    <button type="submit" class="btn-save">Salvar Alterações</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        function showSection(id) {
+            document.getElementById('section-chamados').style.display = 'none';
+            document.getElementById('section-concluidos').style.display = 'none';
+            document.getElementById('section-' + id).style.display = 'block';
+            
+            document.querySelectorAll('.sidebar-nav a').forEach(a => a.classList.remove('active'));
+            if(event) event.currentTarget.classList.add('active');
+        }
+
+        function openModal() {
+            document.getElementById('modalEditar').style.display = 'flex';
+        }
+
+        function closeModal() {
+            document.getElementById('modalEditar').style.display = 'none';
+        }
+    </script>
 </body>
 </html>
