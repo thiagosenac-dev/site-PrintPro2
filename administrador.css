@@ -1,4 +1,3 @@
-/* Variáveis Mantidas */
 :root {
     --primary: #6c5ce7;
     --secondary: #00d2ff;
@@ -7,6 +6,7 @@
     --light-text: #e6edf3;
     --text-gray: #8b949e;
     --success: #00b894;
+    --card-bg: #252945;
 }
 
 * {
@@ -88,36 +88,11 @@ body {
     margin-bottom: 40px;
 }
 
-/* FILTROS */
-.filter-bar {
-    display: flex;
-    gap: 15px;
-    margin-bottom: 25px;
-}
-
-.filter-bar input, .filter-bar select {
-    background: var(--dark-surface);
-    border: 1px solid rgba(255,255,255,0.1);
-    padding: 10px;
-    color: white;
-    border-radius: 5px;
-}
-
-.btn-filter {
-    background: var(--secondary);
-    border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
-    color: white;
-    cursor: pointer;
-}
-
-/* TABELA */
+/* TABELA (Desktop) */
 .table-container {
     background: var(--dark-surface);
     border-radius: 15px;
     overflow: hidden;
-    border: 1px solid rgba(255,255,255,0.05);
 }
 
 table {
@@ -140,7 +115,6 @@ td {
     padding: 20px;
     border-bottom: 1px solid rgba(255,255,255,0.05);
     font-size: 0.95rem;
-    color: var(--light-text);
 }
 
 .tag-id { font-weight: 700; color: var(--secondary); }
@@ -162,15 +136,37 @@ td {
     background: transparent;
     border: 1px solid var(--primary);
     color: var(--primary);
-    padding: 6px 12px;
+    padding: 8px 16px;
     border-radius: 5px;
     cursor: pointer;
-    transition: 0.3s;
+    font-weight: 600;
 }
 
-.btn-edit:hover {
-    background: var(--primary);
+/* FILTROS */
+.filter-bar {
+    display: flex;
+    gap: 10px;
+    max-width: 40%;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.filter-bar input, .filter-bar select {
+    background: var(--dark-surface);
+    border: 1px solid rgba(255,255,255,0.1);
+    padding: 10px;
     color: white;
+    border-radius: 5px;
+    flex: 1;
+}
+
+.btn-filter {
+    background: var(--secondary);
+    border: none;
+    padding: 0 20px;
+    border-radius: 5px;
+    color: white;
+    cursor: pointer;
 }
 
 /* MODAL */
@@ -182,42 +178,135 @@ td {
     justify-content: center;
     align-items: center;
     z-index: 1000;
+    padding: 20px;
 }
 
 .modal-card {
     background: var(--dark-surface);
-    padding: 30px;
+    padding: 25px;
     border-radius: 15px;
-    width: 90%;
-    max-width: 500px;
+    width: 100%;
+    max-width: 450px;
 }
 
 .form-group { margin-bottom: 15px; display: flex; flex-direction: column; }
-.form-group label { margin-bottom: 5px; color: var(--text-gray); }
+.form-group label { margin-bottom: 5px; color: var(--text-gray); font-size: 0.9rem; }
 .form-group select, .form-group textarea {
-    padding: 10px;
+    padding: 12px;
     background: #0f111a;
     border: 1px solid rgba(255,255,255,0.1);
     color: white;
-    border-radius: 5px;
+    border-radius: 8px;
 }
-.form-group textarea { height: 120px; resize: none; }
+.form-group textarea { height: 100px; resize: none; }
 
 .modal-buttons { display: flex; gap: 10px; margin-top: 20px; }
-.btn-save { background: var(--primary); color: white; border: none; padding: 10px; flex: 1; border-radius: 5px; cursor: pointer;}
-.btn-cancel { background: #ff7675; color: white; border: none; padding: 10px; flex: 1; border-radius: 5px; cursor: pointer;}
+.btn-save { background: var(--primary); color: white; border: none; padding: 12px; flex: 1; border-radius: 8px; cursor: pointer; font-weight: 600;}
+.btn-cancel { background: #ff7675; color: white; border: none; padding: 12px; flex: 1; border-radius: 8px; cursor: pointer; font-weight: 600;}
 
-/* RESPONSIVIDADE MOBILE */
+/* ============================================================
+   ESTILO MOBILE REFORMULADO (CARDS)
+   ============================================================ */
 @media (max-width: 768px) {
     .dashboard-container { flex-direction: column; }
-    .sidebar { width: 100%; padding: 20px; border-right: none; border-bottom: 1px solid rgba(255,255,255,0.05); }
-    .sidebar-nav { flex-direction: row; justify-content: center; flex-wrap: wrap; }
-    .main-content { padding: 15px; }
+
+    .sidebar { 
+        width: 100%; 
+        padding: 15px; 
+        border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .sidebar .logo { margin-bottom: 15px; font-size: 1.2rem; }
+
+    .sidebar-nav { 
+        flex-direction: row; 
+        justify-content: space-around; 
+    }
+
+    .sidebar-nav a { 
+        padding: 8px; 
+        font-size: 0.8rem; 
+        flex-direction: column;
+        gap: 5px;
+    }
+
+    .main-content { padding: 20px 15px; }
+
+    .main-header h1 { font-size: 1.4rem; }
+    .admin-info { display: none; } /* Oculta info desnecessária no mobile */
+
     .filter-bar { flex-direction: column; }
-    
+
+    /* Transformando a Tabela em Cards */
+    .table-container { background: transparent; }
     thead { display: none; }
+    
     table, tbody, tr, td { display: block; width: 100%; }
-    tr { background: var(--dark-surface); margin-bottom: 20px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.08); padding: 15px; }
-    td { text-align: left; padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.03); display: flex; flex-direction: column; gap: 5px; }
-    td::before { content: attr(data-label); font-weight: 600; color: var(--primary); font-size: 0.7rem; text-transform: uppercase; }
+
+    tr {
+        background: var(--card-bg);
+        margin-bottom: 20px;
+        border-radius: 16px;
+        padding: 20px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        border: 1px solid rgba(255,255,255,0.05);
+    }
+
+    td {
+        padding: 8px 0;
+        border: none;
+        display: flex;
+        flex-direction: column;
+    }
+
+    /* Estilização específica por tipo de dado no Card */
+    td[data-label="Nome"] {
+        font-size: 1.1rem;
+        font-weight: 700;
+        color: white;
+        margin-bottom: 10px;
+        border-bottom: 1px solid rgba(255,255,255,0.1);
+        padding-bottom: 10px;
+    }
+
+    td[data-label="Nome"]::before { display: none; } /* Remove o label "Nome" para o nome ser o título */
+
+    td::before {
+        content: attr(data-label);
+        font-size: 0.65rem;
+        text-transform: uppercase;
+        color: var(--primary);
+        font-weight: 700;
+        letter-spacing: 1px;
+        margin-bottom: 2px;
+    }
+
+    /* Colocando Máquina e Status Lado a Lado */
+    tbody tr {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+    }
+
+    td[data-label="Nome"], 
+    td[data-label="Descrição"], 
+    td[data-label="Ações"],
+    td[data-label="Resolução Final"] {
+        grid-column: span 2;
+    }
+
+    .status-badge {
+        width: fit-content;
+    }
+
+    /* Botão de Editar em destaque no fim do Card */
+    .btn-edit {
+        width: 100%;
+        margin-top: 10px;
+        padding: 12px;
+        background: var(--primary);
+        color: white;
+        border: none;
+        font-size: 1rem;
+    }
 }
