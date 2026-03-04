@@ -153,7 +153,8 @@ nav ul li a:hover { color: var(--primary); }
 .botao {
     display: flex;
     flex-direction: column;
-    gap: 15px; /* <--- Isso cria a distância entre eles */
+    gap: 15px; 
+    max-width: 75%;
     width: 100%;
     margin-top: auto; 
 }
