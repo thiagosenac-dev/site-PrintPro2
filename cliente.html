@@ -1,75 +1,330 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Área do Cliente | PrintPro</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link rel="stylesheet" href="style.css"> <link rel="stylesheet" href="cliente.css"> </head>
+    <title>Abrir Chamado Suporte - PrintPro</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-color: #0b1020;
+            --card-bg: #121833;
+            --primary-color: #e6edf3; 
+            --accent-color: #4f8cff;  /* Brand */
+            --accent-hover: #00d4ff;  /* Brand 2 */
+            --text-main: #e6edf3;
+            --text-muted: #8892b0;
+            --border-color: #1e264f;
+            --input-bg: #0b1020;
+            --success-color: #36d399; /* OK */
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 650px;
+            background: var(--card-bg);
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--border-color);
+        }
+
+        /* Botão Voltar Superior (Estilo Link) */
+        .top-navigation {
+            margin-bottom: 24px;
+        }
+
+        .btn-back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: color 0.2s ease;
+        }
+
+        .btn-back-link:hover {
+            color: var(--accent-hover);
+        }
+
+        .btn-back-link svg {
+            transition: transform 0.2s ease;
+        }
+
+        .btn-back-link:hover svg {
+            transform: translateX(-4px);
+        }
+
+        /* Cabeçalho do Formulário */
+        .header {
+            margin-bottom: 32px;
+        }
+
+        .header h1 {
+            font-size: 1.75rem;
+            color: var(--primary-color);
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .header p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        /* Formulário e Inputs */
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        label {
+            display: block;
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 8px;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 12px 16px;
+            background-color: var(--input-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 0.95rem;
+            color: var(--text-main);
+            outline: none;
+            transition: all 0.2s ease;
+        }
+
+        /* Ajuste para o ícone do select no modo escuro */
+        select {
+            appearance: none;
+            background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%238892b0' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'></polyline></svg>");
+            background-repeat: no-repeat;
+            background-position: right 16px center;
+            background-size: 16px;
+            padding-right: 40px;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            background-color: var(--card-bg);
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 4px rgba(79, 140, 255, 0.15);
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        /* Grupo de Botões de Ação */
+        .action-group {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 16px;
+            margin-top: 32px;
+            padding-top: 20px;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .btn {
+            padding: 12px 24px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Botão Voltar Inferior (Estilo Secundário) */
+        .btn-secondary {
+            background-color: transparent;
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+        }
+
+        .btn-secondary:hover {
+            background-color: var(--input-bg);
+            border-color: var(--text-muted);
+            color: var(--accent-hover);
+        }
+
+        /* Botão Enviar (Estilo Primário) */
+        .btn-primary {
+            background-color: var(--accent-color);
+            border: none;
+            color: var(--bg-color); /* Contraste escuro no botão claro */
+            box-shadow: 0 4px 14px rgba(79, 140, 255, 0.3);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--accent-hover);
+            box-shadow: 0 4px 20px rgba(0, 212, 255, 0.4);
+        }
+
+        /* Alerta de Sucesso Modificado */
+        .alert-success {
+            display: none;
+            background-color: rgba(54, 211, 153, 0.1);
+            border: 1px solid var(--success-color);
+            color: var(--success-color);
+            padding: 24px;
+            border-radius: 8px;
+            margin-bottom: 24px;
+            text-align: center;
+        }
+
+        .alert-success p {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 16px;
+        }
+
+        .btn-success-back {
+            background-color: var(--success-color);
+            color: var(--bg-color);
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            display: inline-block;
+            transition: opacity 0.2s ease;
+        }
+
+        .btn-success-back:hover {
+            opacity: 0.9;
+        }
+
+        /* Responsividade */
+        @media (max-width: 600px) {
+            .form-row {
+                grid-template-columns: 1fr;
+                gap: 0;
+            }
+            .container {
+                padding: 24px;
+            }
+            .action-group {
+                flex-direction: column-reverse;
+                width: 100%;
+            }
+            .btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
 <body>
 
-    <header>
-        <div class="logo">Print<span>Pro</span></div>
-        <nav>
-            <ul>
-                <li><a href="index.html">Home</a></li>
-                <li><a href="index.html#servicos">Serviços</a></li>
-                <li><a href="contratos.html">Locação</a></li>
-                <li><a href="index.html#contato">Contato</a></li>
-            </ul>
-        </nav>
-    </header>
+    <div class="container">
+        <div class="top-navigation">
+            <a href="index.html" class="btn-back-link">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="19" y1="12" x2="5" y2="12"></line>
+                    <polyline points="12 19 5 12 12 5"></polyline>
+                </svg>
+                Voltar para a página inicial
+            </a>
+        </div>
 
-    <section class="client-hero">
-        <div class="container">
-            <div class="form-container">
-                <div class="form-header">
-                    <i class="fas fa-headset"></i>
-                    <h2>Abertura de Chamado</h2>
-                    <p>Informe os dados da sua máquina para suporte imediato.</p>
-                </div>
+        <div class="header">
+            <h1>Abertura de Chamado</h1>
+            <p>Preencha os detalhes abaixo para solicitar suporte técnico à PrintPro.</p>
+        </div>
 
-                <form id="support-form">
-                    <div class="input-group">
-                        <label for="tag">Etiqueta da Impressora (Ex: P001)</label>
-                        <div class="input-wrapper">
-                            <i class="fas fa-tag"></i>
-                            <input type="text" id="tag" placeholder="Digite o código da etiqueta..." required>
-                        </div>
-                    </div>
+        <div id="successAlert" class="alert-success">
+            <p>Sua solicitação de chamado foi enviada com sucesso ao nosso suporte!</p>
+            <a href="index.html" class="btn-success-back">Voltar para a Tela Inicial</a>
+        </div>
 
-                    <div class="input-group">
-                        <label for="problem">Descrição do Problema</label>
-                        <div class="input-wrapper">
-                            <i class="fas fa-comment-dots"></i>
-                            <textarea id="problem" rows="5" placeholder="Descreva o que está acontecendo com o equipamento..." required></textarea>
-                        </div>
-                    </div>
+        <form id="ticketForm">
+            <div class="form-group">
+                <label for="clientName">Nome Completo E Setor</label>
+                <input type="text" id="clientName" required placeholder="Ex: Thiago, contabilidade">
+            </div>
 
-                    <button type="submit" class="btn-submit">
-                        <i class="fas fa-paper-plane"></i> Enviar Solicitação
-                    </button>
-                </form>
-
-                <div id="success-msg" class="hidden">
-                    <i class="fas fa-check-circle"></i>
-                    <p>Solicitação enviada com sucesso! Nossa equipe entrará em contato em breve.</p>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="deviceModel">Etiqueta do Equipamento</label>
+                    <input type="text" id="deviceModel" required placeholder="Ex: P4576">
                 </div>
             </div>
-        </div>
-    </section>
 
-    <footer>
-        <p>© 2026 PrintPro. Todos os direitos reservados.</p>
-    </footer>
+            <div class="form-group">
+                <label for="description">Descrição Detalhada do Problema</label>
+                <textarea id="description" required placeholder="Descreva o que está acontecendo com o equipamento..."></textarea>
+            </div>
+
+            <div class="action-group">
+                <a href="index.html" class="btn btn-secondary">Voltar ao Início</a>
+                <button type="submit" class="btn btn-primary">Enviar Chamado</button>
+            </div>
+        </form>
+    </div>
 
     <script>
-        // Script simples para simular o envio
-        document.getElementById('support-form').addEventListener('submit', function(e) {
+        document.getElementById('ticketForm').addEventListener('submit', function(e) {
             e.preventDefault();
-            this.style.display = 'none';
-            document.getElementById('success-msg').classList.remove('hidden');
+
+            // Captura corrigida apenas com os elementos existentes na tela atual
+            const chamado = {
+                id: 'CH' + Math.floor(1000 + Math.random() * 9000),
+                cliente: document.getElementById('clientName').value,
+                equipamento: document.getElementById('deviceModel').value,
+                descricao: document.getElementById('description').value,
+                status: 'Ativo',
+                data: new Date().toLocaleDateString('pt-BR')
+            };
+
+            // Integração com LocalStorage
+            let chamadosSalvos = JSON.parse(localStorage.getItem('chamados')) || [];
+            chamadosSalvos.push(chamado);
+            localStorage.setItem('chamados', JSON.stringify(chamadosSalvos));
+
+            // Oculta o formulário para dar foco total à mensagem de sucesso
+            document.getElementById('ticketForm').style.display = 'none';
+
+            // Exibe o painel de sucesso com o aviso e o botão de retorno
+            const alertBox = document.getElementById('successAlert');
+            alertBox.style.display = 'block';
+            
+            // Limpa os campos do formulário internamente
+            document.getElementById('ticketForm').reset();
         });
     </script>
 </body>

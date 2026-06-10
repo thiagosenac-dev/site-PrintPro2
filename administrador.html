@@ -3,30 +3,287 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Painel de Chamados | PrintPro Admin</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <title>Painel Administrativo | PrintPro</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link rel="stylesheet" href="administrador.css">
+    
+    <style>
+        :root {
+            --primary: #6c5ce7;
+            --primary-hover: #5b4cc4;
+            --secondary: #00d2ff;
+            --dark: #1e223a;
+            --dark-surface: #1a1d30;
+            --light-text: #e6edf3;
+            --text-gray: #8b949e;
+            --success: #00b894;
+            --white: #ffffff;
+            
+            /* Status */
+            --status-pendente-bg: rgba(255, 159, 67, 0.15);
+            --status-pendente-txt: #ff9f43;
+            --status-atendimento-bg: rgba(255, 234, 167, 0.15);
+            --status-atendimento-txt: #f1c40f;
+            --status-aguardando-bg: rgba(255, 118, 117, 0.15);
+            --status-aguardando-txt: #ff7675;
+            --status-concluido-bg: rgba(0, 184, 148, 0.15);
+            --status-concluido-txt: #00b894;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: var(--dark);
+            color: var(--light-text);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        /* ESTRUTURA FLEX AUTOMÁTICA */
+        .admin-layout {
+            display: flex;
+            min-height: 100vh;
+            width: 100%;
+        }
+
+        /* SIDEBAR FIXA */
+        .sidebar {
+            width: 260px;
+            background-color: var(--dark-surface);
+            border-right: 1px solid rgba(255, 255, 255, 0.05);
+            display: flex;
+            flex-direction: column;
+            padding: 30px 20px;
+            flex-shrink: 0;
+        }
+
+        .sidebar .logo {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: white;
+            text-transform: uppercase;
+            margin-bottom: 40px;
+            text-align: center;
+        }
+        .sidebar .logo span { color: var(--primary); }
+
+        .sidebar-nav {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            flex-grow: 1;
+        }
+
+        .sidebar-nav a {
+            text-decoration: none;
+            color: var(--text-gray);
+            padding: 12px 16px;
+            border-radius: 8px;
+            transition: 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 500;
+            cursor: pointer;
+        }
+
+        .sidebar-nav a:hover, .sidebar-nav a.active {
+            background: rgba(108, 92, 231, 0.1);
+            color: var(--white);
+        }
+
+        .sidebar-nav a.active {
+            background: var(--primary);
+            color: white;
+        }
+
+        .sidebar-nav a.logout {
+            margin-top: auto;
+            color: #ff7675;
+        }
+
+        /* CONTEÚDO FLUIDO */
+        .main-content {
+            flex: 1;
+            padding: 40px;
+            background-color: var(--dark);
+            min-width: 0;
+        }
+
+        .main-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .main-header h1 { font-size: 1.8rem; font-weight: 700; }
+
+        /* BLOCO DO BOTÃO + LINK VOLTAR */
+        .header-actions-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 6px;
+        }
+
+        .btn-add-chamado {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: 0.3s;
+        }
+        .btn-add-chamado:hover { background-color: var(--primary-hover); }
+
+        .link-back-home {
+            color: var(--text-gray);
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 500;
+            transition: 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .link-back-home:hover { color: var(--primary); }
+
+        .btn-edit {
+            background: rgba(108, 92, 231, 0.1);
+            border: 1px solid rgba(108, 92, 231, 0.3);
+            color: var(--white);
+            padding: 6px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: 0.2s;
+        }
+        .btn-edit:hover { background: var(--primary); }
+
+        /* TABELAS */
+        .table-container {
+            width: 100%;
+            overflow-x: auto;
+            background: var(--dark-surface);
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            margin-bottom: 30px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 750px;
+        }
+
+        th, td {
+            text-align: left;
+            padding: 18px 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            vertical-align: top;
+        }
+
+        th {
+            background: rgba(15, 17, 26, 0.5);
+            color: var(--text-gray);
+            font-weight: 600;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+        }
+
+        .tag-id { font-weight: 700; color: var(--secondary); font-family: monospace; }
+
+        /* BADGES */
+        .status-badge {
+            display: inline-block;
+            padding: 5px 12px;
+            border-radius: 50px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .status-badge.status-pendente { background-color: var(--status-pendente-bg); color: var(--status-pendente-txt); }
+        .status-badge.status-atendimento { background-color: var(--status-atendimento-bg); color: var(--status-atendimento-txt); }
+        .status-badge.status-aguardando { background-color: var(--status-aguardando-bg); color: var(--status-aguardando-txt); }
+        .status-badge.status-concluido { background-color: var(--status-concluido-bg); color: var(--status-concluido-txt); }
+
+        /* MODAIS */
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(15, 17, 26, 0.8);
+            backdrop-filter: blur(5px);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+        }
+
+        .modal-overlay.active { display: flex; }
+        .modal-card { background: var(--dark-surface); padding: 30px; border-radius: 15px; width: 100%; max-width: 500px; border: 1px solid rgba(108, 92, 231, 0.3); }
+        .modal-card h2 { margin-bottom: 20px; font-weight: 700; }
+        .form-group { margin-bottom: 15px; }
+        .form-group label { display: block; margin-bottom: 5px; color: var(--text-gray); font-size: 0.9rem; }
+        
+        .form-group select, .form-group textarea, .form-group input {
+            width: 100%;
+            padding: 10px;
+            background: rgba(15, 17, 26, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: white;
+            border-radius: 6px;
+            outline: none;
+        }
+        .form-group textarea { height: 100px; resize: none; }
+        .modal-buttons { display: flex; gap: 10px; margin-top: 25px; }
+        .btn-save { background: var(--primary); color: white; border: none; padding: 10px 20px; flex: 1; border-radius: 8px; cursor: pointer; font-weight: 600; }
+        .btn-cancel { background: rgba(255, 118, 117, 0.1); color: #ff7675; border: 1px solid rgba(255, 118, 117, 0.3); padding: 10px 20px; flex: 1; border-radius: 8px; cursor: pointer; font-weight: 600; }
+
+        @media (max-width: 768px) {
+            .admin-layout { flex-direction: column; }
+            .sidebar { width: 100%; height: auto; padding: 20px; }
+            .sidebar-nav { flex-direction: row; justify-content: space-around; }
+            .sidebar-nav a.logout { margin-top: 0; }
+            .main-content { padding: 20px; }
+        }
+    </style>
 </head>
 <body>
 
-    <div class="dashboard-container">
+    <div class="admin-layout">
         <aside class="sidebar">
-            <div class="logo">Print<span>Pro</span></div>
+            <div class="logo">Print<span>Pro</span> Admin</div>
             <nav class="sidebar-nav">
-                <a href="#" class="active" onclick="showSection('chamados')"><i class="fas fa-list"></i> Chamados</a>
-                <a href="#" onclick="showSection('concluidos')"><i class="fas fa-check-double"></i> Concluídos</a>
-                <a href="index.html" class="logout"><i class="fas fa-sign-out-alt"></i> Sair</a>
+                <a id="nav-chamados" class="active" onclick="mudarSubSecao('chamados')"><i class="fas fa-list"></i> Ativos</a>
+                <a id="nav-concluidos" onclick="mudarSubSecao('concluidos')"><i class="fas fa-check-double"></i> Concluídos</a>
+                <a href="index.html" class="logout"><i class="fas fa-arrow-left"></i> Sair do Painel</a>
             </nav>
         </aside>
 
         <main class="main-content">
-            
-            <section id="section-chamados">
+            <section id="sub-section-chamados">
                 <header class="main-header">
-                    <h1>Gerenciamento de Chamados</h1>
-                    <div class="admin-info">
-                        <span>Bem-vindo, <strong>Admin</strong></span>
+                    <h1>Chamados Ativos</h1>
+                    <div class="header-actions-wrapper">
+                        <button class="btn-add-chamado" onclick="openCriarModal()">
+                            <i class="fas fa-plus"></i> Criar Interno
+                        </button>
+                        <a href="index.html" class="link-back-home"><i class="fas fa-home"></i> Voltar ao início</a>
                     </div>
                 </header>
 
@@ -34,62 +291,34 @@
                     <table>
                         <thead>
                             <tr>
-                                <th>Nome</th>
+                                <th>Cliente</th>
                                 <th>Máquina</th>
-                                <th>Descrição do Problema</th>
+                                <th>Problema Relatado</th>
                                 <th>Status</th>
                                 <th>Ações</th>
                             </tr>
                         </thead>
-                        <tbody>
-                            <tr>
-                                <td data-label="Nome">Claudio Ramos</td>
-                                <td data-label="Máquina" class="tag-id">PRN-9902</td>
-                                <td data-label="Descrição">Vazamento de toner azul no lado direito das impressões coloridas.</td>
-                                <td data-label="Status"><span class="status-badge">Pendente</span></td>
-                                <td data-label="Ações">
-                                    <button class="btn-edit" onclick="openModal()"><i class="fas fa-edit"></i> Editar</button>
-                                </td>
-                            </tr>
-                        </tbody>
+                        <tbody id="tbody-chamados"></tbody>
                     </table>
                 </div>
             </section>
 
-            <section id="section-concluidos" style="display: none;">
+            <section id="sub-section-concluidos" style="display: none;">
                 <header class="main-header">
-                    <h1>Chamados Concluídos</h1>
+                    <h1>Histórico de Concluídos</h1>
                 </header>
-
-                <div class="filter-bar">
-                    <input type="text" placeholder="Buscar etiqueta...">
-                    <select>
-                        <option value="">Todas as datas</option>
-                        <option value="hoje">Hoje</option>
-                    </select>
-                    <button class="btn-filter">Filtrar</button>
-                </div>
-
                 <div class="table-container">
                     <table>
                         <thead>
                             <tr>
-                                <th>Data Fim</th>
+                                <th>Data Conclusão</th>
                                 <th>Máquina</th>
-                                <th>Resolução Final</th>
-                                <th>Técnico</th>
+                                <th>Laudo Técnico</th>
+                                <th>Responsável</th>
                                 <th>Status</th>
                             </tr>
                         </thead>
-                        <tbody>
-                            <tr>
-                                <td data-label="Data Fim">04/03/2026</td>
-                                <td data-label="Máquina" class="tag-id">HP-1020</td>
-                                <td data-label="Resolução">Troca de rolete efetuada e limpeza interna concluída.</td>
-                                <td data-label="Técnico">Admin</td>
-                                <td data-label="Status"><span class="status-badge status-concluido">Finalizado</span></td>
-                            </tr>
-                        </tbody>
+                        <tbody id="tbody-concluidos"></tbody>
                     </table>
                 </div>
             </section>
@@ -98,46 +327,219 @@
 
     <div class="modal-overlay" id="modalEditar">
         <div class="modal-card">
-            <h2>Atualizar Chamado</h2>
-            <form>
+            <h2>Gerenciar Chamado</h2>
+            <form id="modal-form">
                 <div class="form-group">
-                    <label>Alterar Status</label>
-                    <select>
+                    <label>Status</label>
+                    <select id="modal-status">
                         <option value="pendente">Pendente</option>
                         <option value="atendimento">Em Atendimento</option>
                         <option value="aguardando">Aguardando Peça</option>
-                        <option value="concluido">Concluir</option>
+                        <option value="concluido">Concluir Chamado</option>
                     </select>
                 </div>
                 <div class="form-group">
-                    <label>Descrição / Relatório do Problema</label>
-                    <textarea placeholder="Descreva aqui os detalhes técnicos..."></textarea>
+                    <label>Alterar Problema Relatado</label>
+                    <textarea id="modal-problema" placeholder="Atualize a descrição do problema aqui..."></textarea>
                 </div>
                 <div class="modal-buttons">
                     <button type="button" class="btn-cancel" onclick="closeModal()">Cancelar</button>
-                    <button type="submit" class="btn-save">Salvar Alterações</button>
+                    <button type="submit" class="btn-save">Salvar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="modalCriar">
+        <div class="modal-card">
+            <h2>Abrir Chamado Manual</h2>
+            <form id="criar-form">
+                <div class="form-group">
+                    <label>Cliente</label>
+                    <input type="text" id="criar-nome" required>
+                </div>
+                <div class="form-group">
+                    <label>Código da Máquina</label>
+                    <input type="text" id="criar-tag" required>
+                </div>
+                <div class="form-group">
+                    <label>Status Inicial</label>
+                    <select id="criar-status">
+                        <option value="pendente">Pendente</option>
+                        <option value="atendimento">Em Atendimento</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Relato do Defeito</label>
+                    <textarea id="criar-problema" required></textarea>
+                </div>
+                <div class="modal-buttons">
+                    <button type="button" class="btn-cancel" onclick="closeCriarModal()">Voltar</button>
+                    <button type="submit" class="btn-save">Registrar</button>
                 </div>
             </form>
         </div>
     </div>
 
     <script>
-        function showSection(id) {
-            document.getElementById('section-chamados').style.display = 'none';
-            document.getElementById('section-concluidos').style.display = 'none';
-            document.getElementById('section-' + id).style.display = 'block';
+        // Corrigido para sincronizar exatamente com a mesma chave do formulário externo
+        const CHAVE_BD = 'chamados';
+        let idEmEdicao = null;
+
+        const DADOS_MOCK = [
+            { id: "1", nome: "Claudio Ramos", tag: "PRN-9902", problema: "Vazamento de toner azul.", status: "pendente", resolucao: "", dataFim: "", tecnico: "" },
+            { id: "2", nome: "Gráfica Criciúma", tag: "HP-1020", problema: "Papel prendendo no fusor.", status: "concluido", resolucao: "Substituído rolo pressor.", dataFim: "04/06/2026", tecnico: "Admin" }
+        ];
+
+        function obterDados() {
+            if (!localStorage.getItem(CHAVE_BD)) {
+                localStorage.setItem(CHAVE_BD, JSON.stringify(DADOS_MOCK));
+            }
             
-            document.querySelectorAll('.sidebar-nav a').forEach(a => a.classList.remove('active'));
-            if(event) event.currentTarget.classList.add('active');
+            let dados = JSON.parse(localStorage.getItem(CHAVE_BD));
+            let atualizouDados = false;
+
+            // Função de Normalização: Converte chamados externos estruturados do cliente para a estrutura do Admin
+            dados = dados.map(item => {
+                if (item.cliente || item.equipamento || item.descricao || item.status === 'Ativo') {
+                    atualizouDados = true;
+                    return {
+                        id: item.id || 'CH' + Math.floor(1000 + Math.random() * 9000),
+                        nome: item.nome || item.cliente || "Cliente Externo",
+                        tag: item.tag || item.equipamento || "N/A",
+                        problema: item.problema || item.descricao || "Sem detalhes informados.",
+                        status: item.status === 'Ativo' ? 'pendente' : (item.status ? item.status.toLowerCase() : 'pendente'),
+                        resolucao: item.resolucao || "",
+                        dataFim: item.dataFim || "",
+                        tecnico: item.tecnico || ""
+                    };
+                }
+                return item;
+            });
+
+            if (atualizouDados) {
+                localStorage.setItem(CHAVE_BD, JSON.stringify(dados));
+            }
+
+            return dados;
         }
 
-        function openModal() {
-            document.getElementById('modalEditar').style.display = 'flex';
+        function salvarDados(dados) {
+            localStorage.setItem(CHAVE_BD, JSON.stringify(dados));
         }
 
-        function closeModal() {
-            document.getElementById('modalEditar').style.display = 'none';
+        function mudarSubSecao(secao) {
+            document.getElementById('sub-section-chamados').style.display = secao === 'chamados' ? 'block' : 'none';
+            document.getElementById('sub-section-concluidos').style.display = secao === 'concluidos' ? 'block' : 'none';
+            document.getElementById('nav-chamados').classList.toggle('active', secao === 'chamados');
+            document.getElementById('nav-concluidos').classList.toggle('active', secao === 'concluidos');
         }
+
+        function renderizarPainel() {
+            const chamados = obterDados();
+            const tbodyAtivos = document.getElementById('tbody-chamados');
+            const tbodyConcluidos = document.getElementById('tbody-concluidos');
+
+            tbodyAtivos.innerHTML = '';
+            tbodyConcluidos.innerHTML = '';
+
+            chamados.forEach(item => {
+                if (item.status !== 'concluido') {
+                    let textStatus = 'Pendente';
+                    let badgeClass = 'status-pendente';
+                    if (item.status === 'atendimento') { textStatus = 'Em Atendimento'; badgeClass = 'status-atendimento'; }
+                    if (item.status === 'aguardando') { textStatus = 'Aguardando Peça'; badgeClass = 'status-aguardando'; }
+
+                    const tr = document.createElement('tr');
+                    
+                    tr.innerHTML = `
+                        <td>${item.nome}</td>
+                        <td class="tag-id">${item.tag}</td>
+                        <td>
+                            <div>${item.problema}</div>
+                        </td>
+                        <td><span class="status-badge ${badgeClass}">${textStatus}</span></td>
+                        <td><button class="btn-edit" onclick="configurarEdicao('${item.id}')"><i class="fas fa-cog"></i> Gerenciar</button></td>
+                    `;
+                    tbodyAtivos.appendChild(tr);
+                } else {
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `
+                        <td>${item.dataFim || 'Recente'}</td>
+                        <td class="tag-id">${item.tag}</td>
+                        <td>${item.resolucao || item.problema || 'Sem observações.'}</td>
+                        <td>${item.tecnico || 'Técnico'}</td>
+                        <td><span class="status-badge status-concluido">Finalizado</span></td>
+                    `;
+                    tbodyConcluidos.appendChild(tr);
+                }
+            });
+        }
+
+        function configurarEdicao(id) {
+            idEmEdicao = id;
+            const chamados = obterDados();
+            const encontrado = chamados.find(c => c.id === id);
+            if (encontrado) {
+                document.getElementById('modal-status').value = encontrado.status;
+                document.getElementById('modal-problema').value = encontrado.problema;
+                document.getElementById('modalEditar').classList.add('active');
+            }
+        }
+
+        function closeModal() { document.getElementById('modalEditar').classList.remove('active'); idEmEdicao = null; }
+        function openCriarModal() { document.getElementById('modalCriar').classList.add('active'); }
+        function closeCriarModal() { document.getElementById('modalCriar').classList.remove('active'); document.getElementById('criar-form').reset(); }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            renderizarPainel();
+
+            // Salvar alteração de status e do problema diretamente
+            document.getElementById('modal-form').addEventListener('submit', function(e) {
+                e.preventDefault();
+                if (!idEmEdicao) return;
+
+                const chamados = obterDados();
+                const index = chamados.findIndex(c => c.id === idEmEdicao);
+
+                if (index !== -1) {
+                    const statusDefinido = document.getElementById('modal-status').value;
+                    chamados[index].status = statusDefinido;
+                    chamados[index].problema = document.getElementById('modal-problema').value;
+
+                    if (statusDefinido === 'concluido') {
+                        chamados[index].dataFim = new Date().toLocaleDateString('pt-BR');
+                        chamados[index].tecnico = "Suporte Admin";
+                        chamados[index].resolucao = chamados[index].problema; 
+                    }
+
+                    salvarDados(chamados);
+                    renderizarPainel(); 
+                    closeModal();
+                }
+            });
+
+            // Criar chamado interno
+            document.getElementById('criar-form').addEventListener('submit', function(e) {
+                e.preventDefault();
+
+                const chamadoInterno = {
+                    id: Date.now().toString(),
+                    nome: document.getElementById('criar-nome').value,
+                    tag: document.getElementById('criar-tag').value,
+                    problema: document.getElementById('criar-problema').value,
+                    status: document.getElementById('criar-status').value,
+                    resolucao: "", dataFim: "", tecnico: ""
+                };
+
+                const chamados = obterDados();
+                chamados.push(chamadoInterno);
+                salvarDados(chamados);
+
+                renderizarPainel();
+                closeCriarModal();
+            });
+        });
     </script>
 </body>
 </html>
